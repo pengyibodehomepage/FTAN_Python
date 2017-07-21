@@ -1,0 +1,12 @@
+#vmin(Km/s)
+1.7
+#vmax(Km/s)
+5
+#Tmin(s)
+5
+#Tmax(s)
+30
+#CCF file name
+COR_TA.M14A_TA.M17A.SAC
+#factor in phase match filter to determin the cut time
+0.02
