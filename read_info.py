@@ -7,25 +7,13 @@ from obspy import read
 def readinfo():
     '''
     此函数直接读取了参数文件中的参数,并依据参数文件中的 CCF 文件名(
-    含相对路径)读取了 CCF ,并读取了 CCF 的基本信息,之后将所有信息返
+    含相对路径)读取了 CCF ,并读取了 CCF 的基本信息,之后将必要信息返
     回.
 
     Return
     ------
     tr : Obspy.Trace
         互相关函数
-    STA_st: str
-        主台站
-    STA_ev: str
-        副台站
-    stlo: float
-        主台站经度
-    stla: float
-        主台站纬度
-    evlo: float
-        副台站经度
-    evla: float
-        副台站纬度
     dist: float
         台站间距
     samp: float
