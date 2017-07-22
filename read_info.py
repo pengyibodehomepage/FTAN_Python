@@ -77,10 +77,10 @@ def readinfo():
     PHV=np.loadtxt(PHV)
 
     #打印基本信息
-    print('1.','主台站:',STA_st,'副台站:',STA_ev)
-    print('2.','主台站经纬度:',stlo,stla,'副台站经纬度:',evlo,evla)
+    print('1.','台站 1 :',STA_st,'台站 2 :',STA_ev)
+    print('2.','台站 1 经纬度:',stlo,stla,'台站 2 经纬度:',evlo,evla)
     print('3.','台站间距:',dist,'KM',' CCF 采样率:',samp,'HZ')
-    #(注:主,副台站与 CCF 文件名中两个台站出现的位置呼应)
+    #(注:台站 1 , 2 与 CCF 文件名中两个台站出现的次序对应)
 
     #打印参数信息
     print('4.','vmin =',vmin,'\t','vmax =',vmax,'\t','KM/s')
