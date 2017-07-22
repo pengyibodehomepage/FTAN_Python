@@ -74,5 +74,5 @@ def readinfo():
     print('4.','vmin =',vmin,'\t','vmax =',vmax,'\t','KM/s')
     print('5.','tmin =',tmin,'\t','tmax =',tmax,'\t','s')
 
-    return(tr,CCF,STA_st,STA_ev,float(dist),float(samp),float(vmin),\
+    return(tr,CCF,float(dist),float(samp),float(vmin),\
            float(vmax),float(tmin),float(tmax),alpha,PHV,float(phamafactor))
