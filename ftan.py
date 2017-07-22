@@ -9,7 +9,7 @@ from func_lib import phase_match_filter
 import matplotlib.pyplot as plt
 
 #读取参数和 CCF 的基本信息
-[ccf,ccf_file,STA_st,STA_ev,dist,samp,vmin,vmax,\
+[ccf,ccf_file,dist,samp,vmin,vmax,\
       tmin,tmax,alpha,PHV,phamafactor]=readinfo() 
 
 #对 CCF 进行预处理
