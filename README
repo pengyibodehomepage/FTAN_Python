@@ -1,1 +1,110 @@
 # FTAN_Python
+此软件基于Python实现了时频分析(FTAN)方法,通过互相关函数能够
+求出台站对之间的频散曲线.无需安装,通过运行ftan.py即可进行计算.
+
+系统要求:
+此软件基于Python3运行,同时还需要安装Obspy,Numpy,Scipy,
+Matplotlib等模块.
+关于Obspy的安装可参见https://github.com/obspy/obspy/wiki
+
+脚本介绍:
+1.ftan.py
+  此脚本是主角本,通过运行ftan.py启动程序,进行运算.
+2.func_lib.py
+  此脚本包含了众多执行一定功能的函数,主角本在运行时需要调用此
+  中的函数脚本,包括线性插值,样条插值,计算群速度,计算相速度,
+  相位匹配滤波等等.
+3.read_info.py
+  ftan.py开始运行时会首先调用此脚本,它的功能是读取参数文件
+  param_dat中的用户自定义的参数信息,另外还读取了互相关函数
+  (CCF)的基本信息,包括台站经纬度,采样率,台站间距等等,详细
+  信息参见文件介绍.
+  
+其他文件介绍:
+1.param_dat
+  此文档包含了计算需要的参数,是用户自定义的.此文档必须存在于
+  ftan.py所在目录,文件名不可更改.包括以下几行:
+  
+  vmin:群速度的最小值
+  vmax:群速度的最大值
+  注:上面两个速度值确定了一个速度区间,用来截断互相关函数,也
+     是最终输出图像的纵坐标值,另外它使计算效率更高,结果更精
+     确.vmin不能大于vmax,且两者不能相差太小,否则计算会出现
+     致命错误.
+  Tmin:测量的频散曲线的周期下限
+  Tmax:测量的频散曲线的周期上限
+  CCF file name:互相关函数的文件名,包括文件路径,可以是绝
+                对路径,也可以是相对路径,最终的计算结果会
+                保存在CCF文件所在的目录.
+  fmatch:在相位匹配滤波中,用于确定截断位置处的信号振幅占最
+         大值的百分比
+  2.PHV_dat
+    此文档是全球平均相速度.开始计算时脚本会读取本文档的信息,
+    用于确定由群速度计算相速度时的相位校正因子N.本文档必须
+    存在于ftan.py所在目录,文件名不可更改.
+    
+输入数据:
+    输入数据包括两部分,第一是参数文件param_dat,前面已有介
+绍.第二是互相关函数(CCF).文件名必须是CCF_STA1_STA2.SAC,
+其中,STA1和STA2是两个台站的台站名,其顺序是计算互相关时两个
+台站记录的先后顺序,文件名中的台站名顺序调换并不会影响计算结
+果,这里只是习惯性的表达方式.互相关函数(CCF)的后缀必须是大写
+的'.SAC'.
+    互相关函数必须包含以下几种基本信息:采样率,台战1的经度
+和纬度,台站2的经度和纬度,台站间距.另外,由于要计算谱信噪比,
+因此互相关函数的长度不得小于3001s.互相关函数的起始时间应为
+总长度的一半(负),例如,软件中给出的例子中,CCF的长度是7201s
+(注:采样率是1,因此CCF一共有7201个点),因此其起始时间为
+-3600s.
+
+输出数据:
+    输出数据包括四个文件:*_DISP_1,*_DISP_2,*_AMP_1和
+*_AMP_2.'DISP'代表输出文件是测量的频散数据,'AMP'代表输
+出的文件是所有经过窄带滤波之后的信号的振幅值,最大为100DB.
+'1'代表计算结果为初次的计算结果,'2'代表经过了相位匹配滤波
+的结果.
+
+*_DISP_1:
+包含四列,分别是:
+观测周期    群速度    相速度    谱信噪比
+
+*_DISP_2:
+包含三列,分别是:
+观测周期    群速度    相速度
+
+*_AMP_1:
+包含两列,分别是:
+观测周期    振幅
+
+*_AMP_2:
+包含两列,同*_AMP_1.
+
+REFERENCES
+
+[1] IRIS DMS Product, Western US Ambient Noise Cross-Correlations, 
+  by Mikhail Barmine and Michael Rtizwoller, published electronically 
+  June 2012, Incorporated Research Institutions for Seismology,
+  http://www.iris.edu/dms/products/ancc-ciei 
+  
+[2] Bensen, G.D., M.H. Ritzwoller, M.P. Barmin, A.L. Levshin, F. Lin, M.P. 
+  Moschetti, N.M. Shapiro, and Y. Yang, Processing seismic ambient noise data 
+  to obtain reliable broad-band surface wave dispersion measurements, 
+  Geophys.J.Int., 169,1239-1260,doi: 10.1111/j.1365-246X.2007.03374.x,2007. 
+
+[3] Levshin, A.L., Pisarenko, V.F., Pogrebinsky, G.A., 1972. On a frequency-time 
+  analysis of oscillations, Ann. Geophys.,28, 211-218.
+
+[4] Levshin, A.L.,Yanovskaya, T.B., Lander, A.V., Bukchin,B.G., Barmin, M.P.,
+  Ratnikova, L.I. & Its, E.N., 1989. Seismic Surface Waves in a Laterally
+  Inhomogeneous Earth, ed. Keilis-Borok, V.I., Kluwer, Norwell, Mass.
+
+[5] Levshin, A., L. Ratnikova, and J. Berger, 1992. Surface rities of surface
+  wave propagation across Central Eurasia, Bull. Seism. Soc. Amer., 82, 6, 2464-2493.
+
+[6] Lin, F.-C., M.H. Ritzwoller, and R. Snieder, 2009. Surface wave tomography 
+  by phase-front tracking across a regional broad-band seismic array, Geophys.
+  J. Int., 177(3), 1091-1110.
+
+[7] Shapiro, N. M., M. Campillo, L. Stehly, and M. H. Ritzwoller, 2005.  
+  High resolution surface wave tomography from ambient seismic noise, Science, 
+307(5715), 1615-1618.
